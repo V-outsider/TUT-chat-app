@@ -16,14 +16,17 @@ class HomePage extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.message),
             label: 'Chats',
+            backgroundColor: Color(0xFF42A5F5),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group_work),
             label: 'Channels',
+            backgroundColor: Color(0xFF42A5F5),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
             label: 'Profile',
+            backgroundColor: Color(0xFF42A5F5),
           ),
         ],
       ),

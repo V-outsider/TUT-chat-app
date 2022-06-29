@@ -109,6 +109,8 @@ unlinked_spec.ds
 
 # Coverage
 coverage/
+linux/
+windows/
 
 # Symbols
 app.*.symbols

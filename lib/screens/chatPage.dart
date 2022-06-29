@@ -1,8 +1,12 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import '/models/chatUserModel.dart';
 import '/widgets/conversationList.dart';
 
 class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key}) : super(key: key);
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -11,33 +15,33 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(90, 235, 185, 255),
+      backgroundColor: const Color.fromARGB(90, 235, 185, 255),
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 0),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "TUT chat",
                       style:
                           TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                     ),
                     Container(
-                      padding:
-                          EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 0),
+                      padding: const EdgeInsets.only(
+                          left: 8, right: 8, top: 2, bottom: 0),
                       height: 30,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Color.fromARGB(62, 202, 55, 231),
+                        color: const Color.fromARGB(62, 202, 55, 231),
                       ),
                       child: Row(
-                        children: <Widget>[
+                        children: const <Widget>[
                           Icon(
                             Icons.add,
                             color: Color.fromARGB(255, 240, 55, 117),
@@ -60,7 +64,8 @@ class _ChatPageState extends State<ChatPage> {
             ),
             SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(top: 0, left: 5, right: 16, bottom: 0),
+                padding: const EdgeInsets.only(
+                    top: 0, left: 5, right: 16, bottom: 0),
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: "Search...",
@@ -71,8 +76,8 @@ class _ChatPageState extends State<ChatPage> {
                       size: 20,
                     ),
                     filled: true,
-                    fillColor: Color.fromARGB(148, 254, 243, 255),
-                    contentPadding: EdgeInsets.all(8),
+                    fillColor: const Color.fromARGB(148, 254, 243, 255),
+                    contentPadding: const EdgeInsets.all(8),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide(color: Colors.grey.shade100)),
@@ -84,8 +89,8 @@ class _ChatPageState extends State<ChatPage> {
               child: ListView.builder(
                 itemCount: chatUsers.length,
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 0),
-                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 0),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return ConversationList(
                     name: chatUsers[index].name,

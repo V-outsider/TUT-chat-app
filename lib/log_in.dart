@@ -4,11 +4,6 @@ import 'services/auth.dart';
 import 'shared/prefs_data_control.dart';
 import 'screens/home.dart';
 
-const users = {
-  'dribbble@gmail.com': '12345',
-  'hunter@gmail.com': 'hunter',
-};
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -43,9 +38,6 @@ class LoginScreen extends StatelessWidget {
   Future<String?> _recoverPassword(String name) {
     debugPrint('Name: $name');
     return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'User not exists';
-      }
       return null;
     });
   }

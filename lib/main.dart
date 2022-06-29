@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '/screens/home.dart';
+import 'shared/prefs_data_control.dart';
+import 'log_in.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: FutureBuilder<int?>(
+        future: getIdFromSF(),
+        builder: (context, snapshot) {
+          int? id = snapshot.data;
+          return id != null ? HomePage() : const LoginScreen();
+        },
+      ),
     );
   }
 }

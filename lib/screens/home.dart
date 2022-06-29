@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ChatPage(),
-      bottomNavigationBar: BottomNavigationBar(
+      /*bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.red,
         unselectedItemColor: Colors.grey.shade600,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
             backgroundColor: Color(0xFF42A5F5),
           ),
         ],
-      ),
+      ),*/
     );
   }
 }

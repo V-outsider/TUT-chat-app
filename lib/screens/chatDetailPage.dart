@@ -11,10 +11,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromARGB(255, 235, 185, 255),
         appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: Color.fromARGB(90, 235, 185, 255),
+          backgroundColor: Color.fromARGB(175, 185, 103, 255),
           flexibleSpace: SafeArea(
             child: Container(
               padding: EdgeInsets.only(right: 16),
@@ -63,7 +64,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   ),
                   Icon(
                     Icons.delete,
-                    color: Colors.redAccent,
+                    color: Color.fromARGB(255, 5, 255, 159),
                   ),
                 ],
               ),
@@ -89,12 +90,15 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: (messages[index].messageType == "receiver"
-                              ? Color.fromARGB(127, 245, 188, 245)
-                              : Color.fromARGB(255, 232, 174, 255))),
-                      padding: EdgeInsets.all(16),
+                              ? Color.fromARGB(127, 255, 113, 206)
+                              : Color.fromARGB(166, 184, 103, 255))),
+                      padding: const EdgeInsets.all(16),
                       child: Text(
                         messages[index].messageContent,
-                        style: TextStyle(fontSize: 15),
+                        style: const TextStyle(
+                            fontSize: 15,
+                            color: Color.fromARGB(255, 136, 250, 206),
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -107,7 +111,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
                 height: 60,
                 width: double.infinity,
-                color: Colors.white,
+                color: Color.fromARGB(175, 185, 103, 255),
                 child: Row(
                   children: <Widget>[
                     SizedBox(
@@ -117,7 +121,9 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       child: TextField(
                         decoration: InputDecoration(
                             hintText: "Write message...",
-                            hintStyle: TextStyle(color: Colors.black54),
+                            hintStyle: TextStyle(
+                                color: Color.fromARGB(209, 255, 255, 255),
+                                fontWeight: FontWeight.bold),
                             border: InputBorder.none),
                       ),
                     ),
@@ -128,10 +134,10 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       onPressed: () {},
                       child: Icon(
                         Icons.send,
-                        color: Colors.white,
+                        color: Color.fromARGB(255, 255, 251, 150),
                         size: 18,
                       ),
-                      backgroundColor: Color.fromARGB(255, 240, 55, 117),
+                      backgroundColor: Color.fromARGB(255, 255, 113, 206),
                       elevation: 0,
                     ),
                   ],

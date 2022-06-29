@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import '../serializable/models.dart';
 import 'dart:convert';
 
-const endpoint = 'http://192.168.10.2:1337/';
+const endpoint = 'http://185.74.7.104:11337/';
 
 Future<User?> signUp(String username, String password) async {
   const url = '${endpoint}sign_up';

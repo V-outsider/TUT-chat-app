@@ -1,8 +1,12 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '/models/chatMessageModel.dart';
 
 class ChatDetailPage extends StatefulWidget {
+  const ChatDetailPage({Key? key}) : super(key: key);
+
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
@@ -11,26 +15,26 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 235, 185, 255),
+        backgroundColor: const Color.fromARGB(255, 235, 185, 255),
         appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: Color.fromARGB(175, 185, 103, 255),
+          backgroundColor: const Color.fromARGB(175, 185, 103, 255),
           flexibleSpace: SafeArea(
             child: Container(
-              padding: EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.only(right: 16),
               child: Row(
                 children: <Widget>[
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 2,
                   ),
                   CircleAvatar(
@@ -38,7 +42,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         .primaries[Random().nextInt(Colors.primaries.length)],
                     maxRadius: 20,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   Expanded(
@@ -46,12 +50,12 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Kriss Benwat",
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 6,
                         ),
                         Text(
@@ -62,7 +66,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       ],
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.delete,
                     color: Color.fromARGB(255, 5, 255, 159),
                   ),
@@ -76,12 +80,12 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             ListView.builder(
               itemCount: messages.length,
               shrinkWrap: true,
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              physics: NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 return Container(
-                  padding:
-                      EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                  padding: const EdgeInsets.only(
+                      left: 14, right: 14, top: 10, bottom: 10),
                   child: Align(
                     alignment: (messages[index].messageType == "receiver"
                         ? Alignment.topLeft
@@ -90,8 +94,8 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: (messages[index].messageType == "receiver"
-                              ? Color.fromARGB(127, 255, 113, 206)
-                              : Color.fromARGB(166, 184, 103, 255))),
+                              ? const Color.fromARGB(127, 255, 113, 206)
+                              : const Color.fromARGB(166, 184, 103, 255))),
                       padding: const EdgeInsets.all(16),
                       child: Text(
                         messages[index].messageContent,
@@ -108,16 +112,16 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
-                padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
                 height: 60,
                 width: double.infinity,
-                color: Color.fromARGB(175, 185, 103, 255),
+                color: const Color.fromARGB(175, 185, 103, 255),
                 child: Row(
                   children: <Widget>[
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Expanded(
+                    const Expanded(
                       child: TextField(
                         decoration: InputDecoration(
                             hintText: "Write message...",
@@ -127,18 +131,18 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                             border: InputBorder.none),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
                     FloatingActionButton(
                       onPressed: () {},
-                      child: Icon(
+                      backgroundColor: const Color.fromARGB(255, 255, 113, 206),
+                      elevation: 0,
+                      child: const Icon(
                         Icons.send,
                         color: Color.fromARGB(255, 255, 251, 150),
                         size: 18,
                       ),
-                      backgroundColor: Color.fromARGB(255, 255, 113, 206),
-                      elevation: 0,
                     ),
                   ],
                 ),

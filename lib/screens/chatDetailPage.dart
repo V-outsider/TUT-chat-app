@@ -15,11 +15,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 235, 185, 255),
+        backgroundColor: const Color.fromARGB(255, 19, 208, 255),
         appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: const Color.fromARGB(175, 185, 103, 255),
+          backgroundColor: const Color.fromARGB(255, 5, 255, 161),
           flexibleSpace: SafeArea(
             child: Container(
               padding: const EdgeInsets.only(right: 16),
@@ -31,7 +31,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     },
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 185, 103, 255),
                     ),
                   ),
                   const SizedBox(
@@ -49,26 +49,29 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Text(
+                      children: const <Widget>[
+                        Text(
                           "Kriss Benwat",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 185, 103, 255)),
                         ),
-                        const SizedBox(
+                        SizedBox(
                           height: 6,
                         ),
                         Text(
                           "Online",
                           style: TextStyle(
-                              color: Colors.grey.shade600, fontSize: 13),
+                              color: Color.fromARGB(255, 185, 103, 255),
+                              fontSize: 13),
                         ),
                       ],
                     ),
                   ),
                   const Icon(
                     Icons.delete,
-                    color: Color.fromARGB(255, 5, 255, 159),
+                    color: Color.fromARGB(255, 185, 103, 255),
                   ),
                 ],
               ),
@@ -92,16 +95,31 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         : Alignment.topRight),
                     child: Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: (messages[index].messageType == "receiver"
-                              ? const Color.fromARGB(127, 255, 113, 206)
-                              : const Color.fromARGB(166, 184, 103, 255))),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(
+                                (messages[index].messageType == "receiver"
+                                    ? 35.0
+                                    : 25.0)),
+                            topRight: Radius.circular(
+                                (messages[index].messageType == "receiver"
+                                    ? 25.0
+                                    : 35.0)),
+                            bottomRight: Radius.circular(
+                                (messages[index].messageType == "receiver"
+                                    ? 27.0
+                                    : 2.0)),
+                            bottomLeft: Radius.circular(
+                                (messages[index].messageType == "receiver"
+                                    ? 2.0
+                                    : 27.0)),
+                          ),
+                          color: const Color.fromARGB(255, 185, 103, 255)),
                       padding: const EdgeInsets.all(16),
                       child: Text(
                         messages[index].messageContent,
                         style: const TextStyle(
                             fontSize: 15,
-                            color: Color.fromARGB(255, 136, 250, 206),
+                            color: Color.fromARGB(255, 255, 255, 255),
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -115,7 +133,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                 padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
                 height: 60,
                 width: double.infinity,
-                color: const Color.fromARGB(175, 185, 103, 255),
+                color: const Color.fromARGB(255, 5, 255, 161),
                 child: Row(
                   children: <Widget>[
                     const SizedBox(
@@ -126,7 +144,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                         decoration: InputDecoration(
                             hintText: "Write message...",
                             hintStyle: TextStyle(
-                                color: Color.fromARGB(209, 255, 255, 255),
+                                color: Color.fromARGB(255, 185, 103, 255),
                                 fontWeight: FontWeight.bold),
                             border: InputBorder.none),
                       ),
@@ -136,11 +154,11 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     ),
                     FloatingActionButton(
                       onPressed: () {},
-                      backgroundColor: const Color.fromARGB(255, 255, 113, 206),
+                      backgroundColor: const Color.fromARGB(255, 185, 103, 255),
                       elevation: 0,
                       child: const Icon(
                         Icons.send,
-                        color: Color.fromARGB(255, 255, 251, 150),
+                        color: Color.fromARGB(255, 5, 255, 161),
                         size: 18,
                       ),
                     ),

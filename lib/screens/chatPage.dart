@@ -1,8 +1,12 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import '/models/chatUserModel.dart';
 import '/widgets/conversationList.dart';
+import '../web_sockets/listeners.dart';
+import '../serializable/models.dart';
+import '../services/chatting.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -12,6 +16,39 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  late TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  Future openDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text("Create new chat"),
+            content: TextField(
+              autofocus: true,
+              decoration: const InputDecoration(hintText: 'Input a username'),
+              controller: controller,
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () async {
+                    Navigator.of(context).pop();
+                    await createNewChat(controller.text);
+                  },
+                  child: const Text("Submit"))
+            ],
+          ));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,32 +69,18 @@ class _ChatPageState extends State<ChatPage> {
                       style:
                           TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 2, bottom: 0),
-                      height: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: const Color.fromARGB(62, 202, 55, 231),
-                      ),
-                      child: Row(
-                        children: const <Widget>[
-                          Icon(
-                            Icons.add,
-                            color: Color.fromARGB(255, 240, 55, 117),
-                            size: 20,
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Text(
-                            "New chat",
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
+                    ElevatedButton.icon(
+                        onPressed: () {
+                          openDialog();
+                        },
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.purple,
+                            textStyle: const TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.bold),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50))),
+                        icon: const Icon(Icons.add, size: 18),
+                        label: const Text("Create new chat"))
                   ],
                 ),
               ),
@@ -86,17 +109,34 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             SafeArea(
-              child: ListView.builder(
-                itemCount: chatUsers.length,
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 0),
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ConversationList(
-                    name: chatUsers[index].name,
-                    messageText: chatUsers[index].messageText,
-                    time: chatUsers[index].time,
-                    isMessageRead: (index == 0 || index == 3) ? true : false,
+              child: StreamBuilder(
+                stream: chatsChannel.stream,
+                builder: (context, snapshot) {
+                  var data = [];
+
+                  if (snapshot.hasData) {
+                    // ignore: unused_local_variable
+                    data = jsonDecode(snapshot.data.toString())
+                        .map((i) => ChatWithMessages.fromJson(i))
+                        .toList();
+                  }
+
+                  return ListView.builder(
+                    itemCount: data.length,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(top: 0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return ConversationList(
+                        dest_id: data[index].destination_user_id,
+                        name: data.isNotEmpty
+                            ? data[index].destination_user_name
+                            : "",
+                        messageText: "",
+                        time: data[index].creation_date!,
+                        isMessageRead: false,
+                      );
+                    },
                   );
                 },
               ),
@@ -106,29 +146,4 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
-
-  List<ChatUsers> chatUsers = [
-    ChatUsers(name: "Jane Russel", messageText: "Awesome Setup", time: "Now"),
-    ChatUsers(
-        name: "Glady's Murphy", messageText: "That's Great", time: "Yesterday"),
-    ChatUsers(
-        name: "Jorge Henry", messageText: "Hey where are you?", time: "31 Mar"),
-    ChatUsers(
-        name: "Philip Fox",
-        messageText: "Busy! Call me in 20 mins",
-        time: "28 Mar"),
-    ChatUsers(
-        name: "Debra Hawkins",
-        messageText: "Thankyou, It's awesome",
-        time: "23 Mar"),
-    ChatUsers(
-        name: "Jacob Pena",
-        messageText: "will update you in evening",
-        time: "17 Mar"),
-    ChatUsers(
-        name: "Andrey Jones",
-        messageText: "Can you please share the file?",
-        time: "24 Feb"),
-    ChatUsers(name: "John Wick", messageText: "How are you?", time: "18 Feb"),
-  ];
 }

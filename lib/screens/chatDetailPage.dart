@@ -1,17 +1,26 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../serializable/models.dart';
+import '../web_sockets/listeners.dart';
 import '/models/chatMessageModel.dart';
 
 class ChatDetailPage extends StatefulWidget {
-  const ChatDetailPage({Key? key}) : super(key: key);
+  // ignore: non_constant_identifier_names
+  const ChatDetailPage({Key? key, required this.dest_id}) : super(key: key);
+
+  // ignore: non_constant_identifier_names
+  final int dest_id;
 
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
+  late String name = "Loading...";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,25 +59,21 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        const Text(
-                          "Kriss Benwat",
-                          style: TextStyle(
+                        Text(
+                          name,
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
                           height: 6,
                         ),
-                        Text(
-                          "Online",
-                          style: TextStyle(
-                              color: Colors.grey.shade600, fontSize: 13),
-                        ),
+                        // Text(
+                        //   "Online",
+                        //   style: TextStyle(
+                        //       color: Colors.grey.shade600, fontSize: 13),
+                        // ),
                       ],
                     ),
-                  ),
-                  const Icon(
-                    Icons.delete,
-                    color: Color.fromARGB(255, 5, 255, 159),
                   ),
                 ],
               ),
@@ -77,35 +82,55 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
         ),
         body: Stack(
           children: <Widget>[
-            ListView.builder(
-              itemCount: messages.length,
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.only(
-                      left: 14, right: 14, top: 10, bottom: 10),
-                  child: Align(
-                    alignment: (messages[index].messageType == "receiver"
-                        ? Alignment.topLeft
-                        : Alignment.topRight),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: (messages[index].messageType == "receiver"
-                              ? const Color.fromARGB(127, 255, 113, 206)
-                              : const Color.fromARGB(166, 184, 103, 255))),
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        messages[index].messageContent,
-                        style: const TextStyle(
-                            fontSize: 15,
-                            color: Color.fromARGB(255, 136, 250, 206),
-                            fontWeight: FontWeight.bold),
+            StreamBuilder(
+              stream: chatsChannel.stream,
+              builder: (context, snapshot) {
+                var data = [];
+
+                if (snapshot.hasData) {
+                  // ignore: unused_local_variable
+                  data = jsonDecode(snapshot.data.toString())
+                      .map((i) => ChatWithMessages.fromJson(i))
+                      .toList();
+                }
+                var chat = data
+                    .where((element) =>
+                        element.destination_user_id == widget.dest_id)
+                    .first;
+
+                name = chat.destination_user_name;
+
+                return ListView.builder(
+                  itemCount: chat.messages.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.only(
+                          left: 14, right: 14, top: 10, bottom: 10),
+                      child: Align(
+                        alignment: (messages[index].messageType == "receiver"
+                            ? Alignment.topLeft
+                            : Alignment.topRight),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: (messages[index].messageType == "receiver"
+                                  ? const Color.fromARGB(127, 255, 113, 206)
+                                  : const Color.fromARGB(166, 184, 103, 255))),
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            messages[index].messageContent,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 136, 250, 206),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
             ),
